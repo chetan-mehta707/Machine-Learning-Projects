@@ -14,4 +14,4 @@ matpotlib for data visualization.
 
 All the required functions are derived within the script viz. Activation(),SoftMax(), CrossEntropy() which gives a better understanding of how the data will be processed.
 
-I have given a tensorflow version for the same problem to spot the difference.
+I have given a tensorflow version for the same problem to spot the difference..
