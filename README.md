@@ -1,5 +1,7 @@
 # Machine-Learning-Projects
-This project is developed by the learning I received while studying Machine Learning Concepts. We are trying to solve a simple classification problem here.
+This project is developed by the learning I received while studying Machine Learning Concepts. We are trying to solve couple of problems a simple classification and a regression problem for a sample dataset here.
+
+* 1) Classification Problem:
 
 Problem Statement:
 
@@ -15,3 +17,10 @@ matpotlib for data visualization.
 All the required functions are derived within the script viz. Activation(),SoftMax(), CrossEntropy() which gives a better understanding of how the data will be processed.
 
 I have given a tensorflow version for the same problem to spot the difference..
+
+* 2) Regression Problem:
+
+Problem Statement :
+
+Dataset:
+Dataset consist of various parameters considered for calculating Energy consumption. We need to build a model that accurately predicts the Energy consumption. You can find the dataset in the Regression Problem Folder. 
