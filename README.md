@@ -1,7 +1,8 @@
 # Machine-Learning-Projects
 This project is developed by the learning I received while studying Machine Learning Concepts. We are trying to solve couple of problems a simple classification and a regression problem for a sample dataset here.
 
-1) Classification Problem:
+#1) Classification Problem:
+
 Problem Statement:
 
 Dataset : 
@@ -17,7 +18,8 @@ All the required functions are derived within the script viz. Activation(),SoftM
 
 I have given a tensorflow version for the same problem to spot the difference..
 
-2) Regression Problem:
+#2) Regression Problem:
+
 Problem Statement :
 
 Dataset:
