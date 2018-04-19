@@ -2,13 +2,18 @@ from random import shuffle
 import glob
 import numpy as np
 import tables
+import cv2
 shuffle_data = True  # shuffle the addresses before saving
-hdf5_path = 'Dataset/dataset.hdf5'  # address to where you want to save the hdf5 file
-cat_dog_train_path = 'Dataset/*.jpg'
+hdf5_path = '/Users/chetan/Documents/Git Projects/Machine Learning/Computer Vision Problem/Dataset/dataset.hdf5'  # address to where you want to save the hdf5 file
+cat_dog_train_path = '/Users/chetan/Documents/Git Projects/Machine Learning/Computer Vision Problem/Dataset/*/*.jpg'
+data_order = 'tf'
 
 # read addresses and labels from the 'Dataset' folder
 addrs = glob.glob(cat_dog_train_path)
 labels = [0 if 'hole' in addr else 1 for addr in addrs]  # 0 = Hole, 1 = dirt
+
+print(len(addrs))
+print(len(labels))
 
 # to shuffle data
 if shuffle_data:
@@ -26,6 +31,11 @@ val_labels = labels[int(0.6*len(addrs)):int(0.8*len(addrs))]
 test_addrs = addrs[int(0.8*len(addrs)):]
 test_labels = labels[int(0.8*len(labels)):]
 
+
+print('train size:',len(train_addrs))
+print('val size:',len(val_addrs))
+print('test size:',len(test_addrs))
+
 data_order = 'tf'  # 'th' for Theano, 'tf' for Tensorflow
 img_dtype = tables.UInt8Atom()  # dtype in which the images will be saved
 
@@ -37,88 +47,93 @@ elif data_order == 'tf':
 
 # open a hdf5 file and create earrays
 hdf5_file = tables.open_file(hdf5_path, mode='w')
-
-train_storage = hdf5_file.create_earray(hdf5_file.root, 'train_img', img_dtype, shape=data_shape)
-val_storage = hdf5_file.create_earray(hdf5_file.root, 'val_img', img_dtype, shape=data_shape)
-test_storage = hdf5_file.create_earray(hdf5_file.root, 'test_img', img_dtype, shape=data_shape)
-
-mean_storage = hdf5_file.create_earray(hdf5_file.root, 'train_mean', img_dtype, shape=data_shape)
-
-# create the label arrays and copy the labels data in them
-hdf5_file.create_array(hdf5_file.root, 'train_labels', train_labels)
-hdf5_file.create_array(hdf5_file.root, 'val_labels', val_labels)
-hdf5_file.create_array(hdf5_file.root, 'test_labels', test_labels)
-
-# a numpy array to save the mean of the images
-mean = np.zeros(data_shape[1:], np.float32)
-
-# loop over train addresses
-for i in range(len(train_addrs)):
-    # print how many images are saved every 1000 images
-    if i % 1000 == 0 and i > 1:
-        print 'Train data: {}/{}'.format(i, len(train_addrs))
-
-    # read an image and resize to (224, 224)
-    # cv2 load images as BGR, convert it to RGB
-    addr = train_addrs[i]
-    img = cv2.imread(addr)
-    img = cv2.resize(img, (224, 224), interpolation=cv2.INTER_CUBIC)
-    img = cv2.cvtColor(img, cv2.COLOR_BGR2RGB)
-
-    # add any image pre-processing here
-
-    # if the data order is Theano, axis orders should change
-    if data_order == 'th':
-        img = np.rollaxis(img, 2)
-
-    # save the image and calculate the mean so far
-    train_storage.append(img[None])
-    mean += img / float(len(train_labels))
-
-# loop over validation addresses
-for i in range(len(val_addrs)):
-    # print how many images are saved every 1000 images
-    if i % 1000 == 0 and i > 1:
-        print 'Validation data: {}/{}'.format(i, len(val_addrs))
-
-    # read an image and resize to (224, 224)
-    # cv2 load images as BGR, convert it to RGB
-    addr = val_addrs[i]
-    img = cv2.imread(addr)
-    img = cv2.resize(img, (224, 224), interpolation=cv2.INTER_CUBIC)
-    img = cv2.cvtColor(img, cv2.COLOR_BGR2RGB)
-
-    # add any image pre-processing here
-
-    # if the data order is Theano, axis orders should change
-    if data_order == 'th':
-        img = np.rollaxis(img, 2)
-
-    # save the image
-    val_storage.append(img[None])
-
-# loop over test addresses
-for i in range(len(test_addrs)):
-    # print how many images are saved every 1000 images
-    if i % 1000 == 0 and i > 1:
-        print 'Test data: {}/{}'.format(i, len(test_addrs))
-
-    # read an image and resize to (224, 224)
-    # cv2 load images as BGR, convert it to RGB
-    addr = test_addrs[i]
-    img = cv2.imread(addr)
-    img = cv2.resize(img, (224, 224), interpolation=cv2.INTER_CUBIC)
-    img = cv2.cvtColor(img, cv2.COLOR_BGR2RGB)
-
-    # add any image pre-processing here
-
-    # if the data order is Theano, axis orders should change
-    if data_order == 'th':
-        img = np.rollaxis(img, 2)
-
-    # save the image
-    test_storage.append(img[None])
-
-# save the mean and close the hdf5 file
-mean_storage.append(mean[None])
-hdf5_file.close()
+try:
+    train_storage = hdf5_file.create_earray(hdf5_file.root, 'train_img', img_dtype, shape=data_shape)
+    val_storage = hdf5_file.create_earray(hdf5_file.root, 'val_img', img_dtype, shape=data_shape)
+    test_storage = hdf5_file.create_earray(hdf5_file.root, 'test_img', img_dtype, shape=data_shape)
+    
+    mean_storage = hdf5_file.create_earray(hdf5_file.root, 'train_mean', img_dtype, shape=data_shape)
+    
+    # create the label arrays and copy the labels data in them
+    hdf5_file.create_array(hdf5_file.root, 'train_labels', train_labels)
+    hdf5_file.create_array(hdf5_file.root, 'val_labels', val_labels)
+    hdf5_file.create_array(hdf5_file.root, 'test_labels', test_labels)
+    
+    # a numpy array to save the mean of the images
+    mean = np.zeros(data_shape[1:], np.float32)
+    
+    # loop over train addresses
+    for i in range(len(train_addrs)):
+        # print how many images are saved every 100 images
+        if i % 10 == 0 and i > 1:
+            print('Train data: {}/{}'.format(i, len(train_addrs)))
+    
+        # read an image and resize to (224, 224)
+        # cv2 load images as BGR, convert it to RGB
+        addr = train_addrs[i]
+        #print(addr)
+        img = cv2.imread(addr)
+        img = cv2.resize(img, (224, 224), interpolation=cv2.INTER_CUBIC)
+        img = cv2.cvtColor(img, cv2.COLOR_BGR2RGB)
+    
+        # add any image pre-processing here
+    
+        # if the data order is Theano, axis orders should change
+        if data_order == 'th':
+            img = np.rollaxis(img, 2)
+    
+        # save the image and calculate the mean so far
+        train_storage.append(img[None])
+        mean += img / float(len(train_labels))
+    
+    # loop over validation addresses
+    for i in range(len(val_addrs)):
+        # print how many images are saved every 1000 images
+        if i % 10 == 0 and i > 1:
+            print ('Validation data: {}/{}'.format(i, len(val_addrs)))
+    
+        # read an image and resize to (224, 224)
+        # cv2 load images as BGR, convert it to RGB
+        addr = val_addrs[i]
+        img = cv2.imread(addr)
+        img = cv2.resize(img, (224, 224), interpolation=cv2.INTER_CUBIC)
+        img = cv2.cvtColor(img, cv2.COLOR_BGR2RGB)
+    
+        # add any image pre-processing here
+    
+        # if the data order is Theano, axis orders should change
+        if data_order == 'th':
+            img = np.rollaxis(img, 2)
+    
+        # save the image
+        val_storage.append(img[None])
+    
+    # loop over test addresses
+    for i in range(len(test_addrs)):
+        # print how many images are saved every 1000 images
+        if i % 10 == 0 and i > 1:
+            print ('Test data: {}/{}'.format(i, len(test_addrs)))
+    
+        # read an image and resize to (224, 224)
+        # cv2 load images as BGR, convert it to RGB
+        addr = test_addrs[i]
+        #print(addr)
+        img = cv2.imread(addr)
+        img = cv2.resize(img, (224, 224), interpolation=cv2.INTER_CUBIC)
+        img = cv2.cvtColor(img, cv2.COLOR_BGR2RGB)
+    
+        # add any image pre-processing here
+    
+        # if the data order is Theano, axis orders should change
+        if data_order == 'th':
+            img = np.rollaxis(img, 2)
+    
+        # save the image
+        test_storage.append(img[None])
+    
+    # save the mean and close the hdf5 file
+    mean_storage.append(mean[None])
+    print('HDF5 Done')
+finally:
+    print('In Finally')
+    hdf5_file.close()
