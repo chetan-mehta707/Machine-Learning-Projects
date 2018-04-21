@@ -41,9 +41,9 @@ img_dtype = tables.UInt8Atom()  # dtype in which the images will be saved
 
 # check the order of data and chose proper data shape to save images
 if data_order == 'th':
-    data_shape = (0, 3, 224, 224)
+    data_shape = (0, 3, 128, 128)
 elif data_order == 'tf':
-    data_shape = (0, 224, 224, 3)
+    data_shape = (0, 128, 128, 3)
 
 # open a hdf5 file and create earrays
 hdf5_file = tables.open_file(hdf5_path, mode='w')
@@ -73,7 +73,7 @@ try:
         addr = train_addrs[i]
         #print(addr)
         img = cv2.imread(addr)
-        img = cv2.resize(img, (224, 224), interpolation=cv2.INTER_CUBIC)
+        img = cv2.resize(img, (128, 128), interpolation=cv2.INTER_CUBIC)
         img = cv2.cvtColor(img, cv2.COLOR_BGR2RGB)
     
         # add any image pre-processing here
@@ -96,7 +96,7 @@ try:
         # cv2 load images as BGR, convert it to RGB
         addr = val_addrs[i]
         img = cv2.imread(addr)
-        img = cv2.resize(img, (224, 224), interpolation=cv2.INTER_CUBIC)
+        img = cv2.resize(img, (128, 128), interpolation=cv2.INTER_CUBIC)
         img = cv2.cvtColor(img, cv2.COLOR_BGR2RGB)
     
         # add any image pre-processing here
@@ -119,7 +119,7 @@ try:
         addr = test_addrs[i]
         #print(addr)
         img = cv2.imread(addr)
-        img = cv2.resize(img, (224, 224), interpolation=cv2.INTER_CUBIC)
+        img = cv2.resize(img, (128, 128), interpolation=cv2.INTER_CUBIC)
         img = cv2.cvtColor(img, cv2.COLOR_BGR2RGB)
     
         # add any image pre-processing here
