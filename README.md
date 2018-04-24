@@ -9,7 +9,7 @@ Problem Statement:
 Dataset : Image dataset of clothes with dirt and hole.
 Here, I am trying to classify image data of clothes into couple of categories(viz clothes with hole and dirt).
 For gathering dataset I am using javascript and python to collect data from ***google image***.
-Search the image you want to collect from google image search, scroll down till you feel data is sufficient. Run *web.js* which will give you a ***urls.txt*** file containing urls for the images. Then using python's ***request*** module we will store those images into a directory.
+Search the image you want to collect from google image search, scroll down till you feel data is sufficient. Run ***web.js*** which will give you a ***urls.txt*** file containing urls for the images. Then using python's ***request*** module we will store those images into a directory.
 
 Once you have gathered the data, the next step comes where you label your images, compress them and add them to a batch file. I am using ***OpenCv*** library and ***HDF5*** format to store image data.
 
