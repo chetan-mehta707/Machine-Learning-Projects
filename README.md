@@ -13,7 +13,7 @@ Search the image you want to collect from google image search, scroll down till 
 
 Once you have gathered a data the next step comes where you label your image, compress them and add it to a batch file. I am using OpenCv library and HDF5 format to store image data.
 
-Once the data is filtered and processed its time to built our classifier, I am using #### CNN #### architecture for building classifer using Keras.
+Once the data is filtered and processed its time to built our classifier, I am using CNN architecture for building classifer using Keras.
 
 
 ## 2. Classification Problem:
