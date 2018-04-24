@@ -1,7 +1,21 @@
 # Machine-Learning-Projects
 This project is developed by the learning I received while studying Machine Learning Concepts. We are trying to solve couple of problems a simple classification and a regression problem for a sample dataset here.
 
-* 1) Classification Problem:
+* 1) Computer Vision Problem: Image Classifier 
+
+Problem Statement:
+
+Dataset : Image dataset of clothes with dirt and hole.
+Here, I am trying to classify image data of clothes into couple of category(viz clothes with hole and dirt).
+For gathering dataset I am using javascript and python to collect data from google image.
+Search the image you want to collect from google image search, scroll down till you feel data is sufficient. Run web.js which will give you a urls.txt file containing url's for the images. Then using pyhton's request module we will store those images into a directory.
+
+Once you have gathered a data the next step comes where you label your image, compress them and add it to a batch file. I am using OpenCv library and HDF5 format to store image data.
+
+Once the data is filtered and processed its time to built our classifier, I am using CNN architecture for building classifer using Keras.
+
+
+* 2) Classification Problem:
 
 Problem Statement:
 
@@ -18,7 +32,7 @@ All the required functions are derived within the script viz. Activation(),SoftM
 
 I have given a tensorflow version for the same problem to spot the difference..
 
-* 2) Regression Problem:
+* 3) Regression Problem:
 
 Problem Statement :
 
