@@ -1,7 +1,8 @@
 # Machine-Learning-Projects
-This project is developed by the learning I received while studying Machine Learning Concepts. We are trying to solve couple of problems a simple classification and a regression problem for a sample dataset here.
+This project is developed by the learning I received while studying Machine Learning Concepts.
+Follwing are the problem statements I have identified.
 
-* 1) Computer Vision Problem: Image Classifier 
+* i) Computer Vision Problem: Image Classifier 
 
 Problem Statement:
 
@@ -15,7 +16,7 @@ Once you have gathered a data the next step comes where you label your image, co
 Once the data is filtered and processed its time to built our classifier, I am using CNN architecture for building classifer using Keras.
 
 
-* 2) Classification Problem:
+* ii) Classification Problem:
 
 Problem Statement:
 
@@ -32,7 +33,7 @@ All the required functions are derived within the script viz. Activation(),SoftM
 
 I have given a tensorflow version for the same problem to spot the difference..
 
-* 3) Regression Problem:
+* iii) Regression Problem:
 
 Problem Statement :
 
